@@ -2,6 +2,36 @@
 @import "tw-animate-css";
 
 
+
+
+/* ==== clerk class override ===== */
+
+.cl-userButtonPopoverActionButtonIcon {
+  color: white;
+}
+
+.cl-logoBox {
+  height: 40px;
+}
+.cl-dividerLine {
+  background: #252a41;
+  height: 2px;
+}
+
+.cl-socialButtonsIconButton {
+  border: 3px solid #565761;
+}
+
+.cl-internal-wkkub3 {
+  color: white;
+}
+.cl-userButtonPopoverActionButton {
+  color: white;
+}
+
+
+
+
 /* =============================== */
 
 @layer utilities {
@@ -11,6 +41,9 @@
 
   .flex-between {
     @apply flex justify-between items-center;
+  }
+  .bg-hero {
+    background-image: var(--bg-hero);
   }
 }
 
@@ -203,6 +236,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
 
 /* =====================================================
    KEYFRAMES
