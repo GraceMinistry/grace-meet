@@ -12,7 +12,8 @@ import MeetingSetup from '@/components/MeetingSetup';
 import MeetingRoom from '@/components/MeetingRoom';
 
 const MeetingPage = () => {
-  const { id } = useParams();
+  const { id: rawId } = useParams();
+  const id = typeof rawId === "string" ? rawId : "";  
   const { isLoaded, user } = useUser();
   const { call, isCallLoading } = useGetCallById(id);
   const [isSetupComplete, setIsSetupComplete] = useState(false);

@@ -42,14 +42,14 @@ export default function RootLayout({
           signIn: {
             ...enUS.signIn,
             start: {
-              ...enUS.signIn.start,
+              ...(enUS.signIn?.start ?? {}),
               title: "Grace Meet",
             },
           },
           signUp: {
             ...enUS.signUp,
             start: {
-              ...enUS.signUp.start,
+              ...(enUS.signUp?.start ?? {}),
               title: "Grace Meet",
             },
           },

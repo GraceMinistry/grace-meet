@@ -42,22 +42,17 @@ const MeetingRoom = () => {
     return (
       <div className="w-full h-full">
         {layout === "grid" ? (
-          <PaginatedGridLayout
-            pageArrowsVisible
-            groupParticipants
-            className="w-full h-full"
-          />
+          <div className="w-full h-full">
+            <PaginatedGridLayout pageArrowsVisible />
+          </div>
         ) : (
-          <SpeakerLayout
-            participantsBarPosition={layout === "speaker-left" ? "right" : "left"}
-            mainParticipantStyle={{
-              objectFit: "cover",
-            }}
-            participantsBarStyle={{
-              width: "260px",
-              maxWidth: "30%",
-            }}
-          />
+          <div className="w-full h-full">
+            <SpeakerLayout
+              participantsBarPosition={
+                layout === "speaker-left" ? "right" : "left"
+              }
+            />
+          </div>
         )}
       </div>
     );
@@ -85,17 +80,15 @@ const MeetingRoom = () => {
             showParticipants ? "translate-x-0" : "translate-x-full"
           )}
         >
-          <CallParticipantsList
-            onClose={() => setShowParticipants(false)}
-            className="h-full"
-          />
+          <div className="h-full">
+            <CallParticipantsList onClose={() => setShowParticipants(false)} />
+          </div>
         </aside>
       </div>
 
       {/* CONTROLS */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-40">
         <div className="flex items-center justify-center gap-3 bg-black/40 px-5 py-3 rounded-xl border border-white/20 backdrop-blur-xl flex-wrap sm:flex-nowrap">
-
           <CallControls onLeave={() => router.push("/")} />
 
           {/* LAYOUT DROPDOWN */}
@@ -108,7 +101,9 @@ const MeetingRoom = () => {
               {["Grid", "Speaker-Left", "Speaker-Right"].map((item) => (
                 <DropdownMenuItem
                   key={item}
-                  onClick={() => setLayout(item.toLowerCase() as CallLayoutType)}
+                  onClick={() =>
+                    setLayout(item.toLowerCase() as CallLayoutType)
+                  }
                 >
                   {item}
                 </DropdownMenuItem>
