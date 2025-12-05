@@ -1,6 +1,6 @@
-// app/root/layout.tsx
+// app/root/meeting/[id]/layout.tsx
 import type { Metadata } from "next";
-import StreamVideoProvider from "@/providers/StreamClientProvider";
+import MeetingRoomWrapper from "@/components/MeetingRoomWrapper";
 import React, { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -12,15 +12,15 @@ export const metadata: Metadata = {
   },
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const MeetingLayout = ({ children }: { children: ReactNode }) => {
   return (
     <main>
-      <StreamVideoProvider>
+      <MeetingRoomWrapper>
         {children}
         <Toaster />
-      </StreamVideoProvider>
+      </MeetingRoomWrapper>
     </main>
   );
 };
 
-export default RootLayout;
+export default MeetingLayout;
