@@ -7,14 +7,10 @@ const MeetingRoomWrapper = ({ children }: { children: React.ReactNode }) => {
   const wakeLockRef = useRef<any>(null);
   const miniRef = useRef<HTMLDivElement>(null);
 
-  const [minimized, setMinimized] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   const [drag, setDrag] = useState({ x: 20, y: 80 });
   const [isDragging, setIsDragging] = useState(false);
 
-  // Active speaker glow (Stream hook)
-  //   const { useActiveSpeaker } = useCallStateHooks();
-  //   const activeSpeaker = useActiveSpeaker();
-  // Dominant speaker glow (Stream hook)
   const { useDominantSpeaker } = useCallStateHooks();
   const dominantSpeaker = useDominantSpeaker();
 
@@ -40,8 +36,10 @@ const MeetingRoomWrapper = ({ children }: { children: React.ReactNode }) => {
     enableBackgroundAudio();
 
     const handleVis = () => {
+      setShowOverlay(document.hidden); // This is the core behavior
       if (!document.hidden) requestWakeLock();
     };
+
     document.addEventListener("visibilitychange", handleVis);
 
     return () => {
@@ -50,7 +48,7 @@ const MeetingRoomWrapper = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  // Dragging logic for mini window
+  // Dragging logic
   const onDragStart = () => setIsDragging(true);
   const onDragEnd = () => setIsDragging(false);
 
@@ -64,44 +62,33 @@ const MeetingRoomWrapper = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div onMouseMove={onDrag} className="w-full h-full relative">
+
       {/* FULL MEETING UI */}
-      {!minimized && (
-        <div className="w-full h-full">
-          {children}
+      {children}
 
-          {/* Minimize Button */}
-          <button
-            onClick={() => setMinimized(true)}
-            className="absolute top-4 right-4 z-50 bg-black/60 text-white px-3 py-1 rounded-full"
-          >
-            Minimize
-          </button>
-        </div>
-      )}
-
-      {/* MINI FLOATING OVERLAY */}
-      {minimized && (
+      {/* FLOATING MINI OVERLAY (appears only when tab hidden) */}
+      {showOverlay && (
         <div
           ref={miniRef}
           onMouseDown={onDragStart}
           onMouseUp={onDragEnd}
           onClick={() => {
-            if (!isDragging) setMinimized(false);
+            if (!isDragging) window.focus(); // return to tab
           }}
           className={`
-            fixed z-50 cursor-pointer rounded-full
-            overflow-hidden shadow-lg transition-all duration-300
+            fixed z-[99999] cursor-pointer rounded-full 
+            shadow-lg overflow-hidden transition-all duration-300
             ${dominantSpeaker ? "ring-4 ring-blue-400" : ""}
           `}
           style={{
-            width: minimized ? 50 : 180,
-            height: minimized ? 50 : 180,
+            width: 65,
+            height: 65,
             left: drag.x,
             top: drag.y,
           }}
         >
-          <div className="w-full h-full bg-black/50 flex items-center justify-center text-white">
-            GM
+          <div className="w-full h-full bg-black/60 flex items-center justify-center text-white text-sm">
+            Live
           </div>
         </div>
       )}
